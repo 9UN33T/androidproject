@@ -7,7 +7,7 @@ import android.content.Intent;
 import androidx.core.app.NotificationCompat;
 
 public class NotificationReceiver extends BroadcastReceiver {
-    private static final String CHANNEL_ID = "task_channel"; // Add this constant
+    private static final String CHANNEL_ID = "task_channel";
 
     @Override
     public void onReceive(Context context, Intent intent) {

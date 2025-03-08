@@ -25,6 +25,6 @@ public class Task {
 
     public boolean isDueWithinHour() {
         long currentTime = System.currentTimeMillis();
-        return dueDateTime - currentTime <= 3600000; // 1 hour in milliseconds
+        return dueDateTime - currentTime <= 3600000;
     }
 }

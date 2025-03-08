@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -15,7 +16,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private final SimpleDateFormat dateFormat;
 
     public TaskAdapter(List<Task> tasks) {
-        this.tasks = tasks;
+        this.tasks = tasks != null ? tasks : new ArrayList<>();
         this.dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     }
 
@@ -28,9 +29,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Task task = tasks.get(position);
-        holder.taskName.setText(task.getTaskName());
-        holder.taskTime.setText(dateFormat.format(new Date(task.getDueDateTime())));
+        if (position < tasks.size()) {
+            Task task = tasks.get(position);
+            holder.taskName.setText(task.getTaskName());
+            holder.taskTime.setText(dateFormat.format(new Date(task.getDueDateTime())));
+        }
     }
 
     @Override
