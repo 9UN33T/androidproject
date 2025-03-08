@@ -1,36 +1,36 @@
+package com.example.taskmanager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
-    private List<Task> tasks = new ArrayList<>();
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
+    private List<Task> tasks;
+    private final SimpleDateFormat dateFormat;
 
-    public void setTasks(List<Task> tasks) {
+    public TaskAdapter(List<Task> tasks) {
         this.tasks = tasks;
-        notifyDataSetChanged();
+        this.dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     }
 
     @Override
-    public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.task_item, parent, false);
-        return new TaskViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(TaskViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         Task task = tasks.get(position);
-        holder.taskIdView.setText("ID: " + task.getTaskId());
-        holder.taskNameView.setText(task.getTaskName());
-        holder.dueDateView.setText(dateFormat.format(new Date(task.getDueDateTime())));
+        holder.taskName.setText(task.getTaskName());
+        holder.taskTime.setText(dateFormat.format(new Date(task.getDueDateTime())));
     }
 
     @Override
@@ -38,16 +38,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         return tasks.size();
     }
 
-    static class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView taskIdView;
-        TextView taskNameView;
-        TextView dueDateView;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView taskName;
+        TextView taskTime;
 
-        TaskViewHolder(View itemView) {
-            super(itemView);
-            taskIdView = itemView.findViewById(R.id.taskId);
-            taskNameView = itemView.findViewById(R.id.taskName);
-            dueDateView = itemView.findViewById(R.id.dueDate);
+        ViewHolder(View view) {
+            super(view);
+            taskName = view.findViewById(R.id.taskName);
+            taskTime = view.findViewById(R.id.taskTime);
         }
     }
 }
